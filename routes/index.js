@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const blogController = require('../controllers/blogController');
 
-router.get('/', (req, res) => {
-    res.send('Hey! It works!');
-});
+router.get('/', blogController.homePage);
 
-router.get('/reverse/:name', (req, res) => {
-    res.send(req.params.name);
-});
+router.get('/add', blogController.addStore);
 
 module.exports = router;

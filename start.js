@@ -10,6 +10,9 @@ mongoose.connection.on('error', (err) => {
     console.error(`Connection error: ${err.message}`);
 });
 
+// import all models
+require('./models/Blog');
+
 // run server
 const app = require('./app');
 app.set('port', process.env.PORT || 7777);

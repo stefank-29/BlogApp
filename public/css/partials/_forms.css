@@ -1,0 +1,35 @@
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(23, 23, 197);
+}
+input.input--error,
+textarea.input--error {
+    border-color: red;
+}
+label {
+    padding: 10px 0;
+    display: block;
+}
+.form {
+    background: white;
+    padding: 2rem;
+    box-shadow: linear-gradient(
+        90deg,
+        #48ded4 0%,
+        #e82c75 35%,
+        rgb(255, 196, 0) 75%,
+        #33e2d7 95%
+    );
+}
+.form {
+    margin-top: 4rem;
+}
+.form h2 {
+    margin: 0;
+    font-size: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgb(23, 23, 197);
+}
