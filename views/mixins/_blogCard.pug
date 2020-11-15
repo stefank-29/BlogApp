@@ -1,0 +1,11 @@
+mixin blogCard(blog = {})
+    .blog
+        .blog__hero
+            .blog__actions
+                button edit
+            img(src=`/uploads/${blog.photo || 'blog.png'}`, alt="blog photo")
+            h2.title   
+                a(href=`/blog/${blog.slug}`) #{blog.title}
+        .blog__details
+            p= blog.text.split(' ').slice(0, 30).join(' ')
+            

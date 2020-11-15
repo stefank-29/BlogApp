@@ -19,24 +19,24 @@ const blogSchema = new mongoose.Schema({
         default: Date.now,
     },
     photo: String,
-    author: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-        required: 'You must supply an author',
-    },
+    // author: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'User',
+    //     required: 'You must supply an author',
+    // },
 });
 
 blogSchema.pre('save', async function (next) {
     // change slug if name is modified
-    if (!this.isModified('name')) {
+    if (!this.isModified('title')) {
         next(); // skipuj
         return;
     }
-    this.slug = slug(this.name);
-    const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
-    const blogsWithSlugs = await this.constructor.find({ slug: slugRegEx });
-    if (blogsWithSlugs.lenght) {
-        this.slug = `${this.slug}-${blogsWithSlugs.lenght + 1}`; // slugs with same name + 1
+    this.slug = slug(this.title);
+    const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i'); // case insensitive
+    const storesWithSlugs = await this.constructor.find({ slug: slugRegEx });
+    if (storesWithSlugs.length) {
+        this.slug = `${this.slug}-${storesWithSlugs.length + 1}`; // dodeli mu se prvi sledeci broj
     }
     next();
 });

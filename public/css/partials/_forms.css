@@ -1,8 +1,15 @@
 input,
 textarea {
-    width: 100%;
+    width: 90%;
     padding: 10px;
-    border: 1px solid rgb(23, 23, 197);
+    border: 1px solid rgba(23, 23, 197, 0.45);
+    font-size: 1.5rem;
+    outline: none;
+    resize: none;
+}
+input:focus,
+textarea:focus {
+    box-shadow: 0 0 5px 2px rgb(7, 132, 250);
 }
 input.input--error,
 textarea.input--error {
@@ -10,6 +17,7 @@ textarea.input--error {
 }
 label {
     padding: 10px 0;
+    font-size: 2rem;
     display: block;
 }
 .form {
@@ -32,4 +40,14 @@ label {
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     border-bottom: 1px solid rgb(23, 23, 197);
+}
+
+input.button {
+    margin-top: 2rem;
+    background-color: brown;
+    cursor: pointer;
+}
+
+input.button:hover {
+    background-color: rgb(199, 67, 67);
 }
