@@ -60,3 +60,8 @@ h6 {
     font-size: 10rem;
     text-align: center;
 }
+
+.avatar {
+    width: 70px;
+    border-radius: 50%;
+}

@@ -1,8 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const session = require('express-session');
+const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const promisify = require('es6-promisify');
@@ -11,7 +12,6 @@ const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
-const router = require('./routes/index');
 require('./handlers/passport');
 
 // create Express app
@@ -34,10 +34,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // validating data
 app.use(expressValidator());
 
-//? Passport JS to handle our logins
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(
     session({
         secret: process.env.SECRET,
@@ -47,6 +43,11 @@ app.use(
         store: new MongoStore({ mongooseConnection: mongoose.connection }),
     })
 );
+
+//! mora posle session-a
+//? Passport JS to handle our logins
+app.use(passport.initialize());
+app.use(passport.session());
 
 //? varijable se prosledjuju templejtu u svim request-ovima
 // pass variables to our templates + all requests

@@ -61,3 +61,6 @@
 .nav__link--logo svg {
     margin: 0;
 }
+.nav__link img {
+    width: 70px;
+}

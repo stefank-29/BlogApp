@@ -8,19 +8,24 @@ const { authenticate } = require('passport');
 
 router.get('/', catchErrors(blogController.getBlogs));
 router.get('/blogs', catchErrors(blogController.getBlogs));
+router.get(
+    '/myBlogs',
+    authController.isLoggedIn,
+    catchErrors(blogController.getUserBlogs)
+);
 
-router.get('/add', blogController.addStore);
+router.get('/add', authController.isLoggedIn, blogController.addBlog);
 router.post(
     '/add',
     blogController.upload,
     catchErrors(blogController.resize),
-    catchErrors(blogController.createStore)
+    catchErrors(blogController.createBlog)
 );
 router.post(
     '/add/:id',
     blogController.upload,
     catchErrors(blogController.resize),
-    catchErrors(blogController.updateStore)
+    catchErrors(blogController.updateBlog)
 );
 
 router.get('/blogs/:id/edit/', catchErrors(blogController.editBlog));
@@ -44,5 +49,8 @@ router.post(
 router.get('/logout', authController.logout);
 
 router.post('/login', authController.login);
+
+router.get('/account', userController.account);
+router.post('/account', catchErrors(userController.updateAccount));
 
 module.exports = router;

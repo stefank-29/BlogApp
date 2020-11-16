@@ -3,7 +3,7 @@ html
   head
     title= `${title} | ${h.siteName}`
     link(rel='stylesheet', href='/dist/style.css')
-    link(rel="shortcut icon" type="image/png" href="/images/icons/doughnut.png")
+    link(rel="shortcut icon" type="image/png" href="/images/icons/blogger.png")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel='styelsheet', href='https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap', type='text/css')
     
@@ -30,7 +30,7 @@ html
                 span Logout
               li.nav__item: a.nav__link(href="/account", class=(currentPath.startsWith('/account') ? 'nav__link--active' : ''))
                 //- globaly recognised avatar (service za )
-                img.avatar(src=user.gravatar )
+                img.avatar(src=user.gravatar width='200' )
             else
               li.nav__item: a.nav__link(href="/register", class=(currentPath.startsWith('/register') ? 'nav__link--active' : '')) Register
               li.nav__item: a.nav__link(href="/login", class=(currentPath.startsWith('/login') ? 'nav__link--active' : '')) Log In
@@ -43,3 +43,5 @@ html
     block scripts
       script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
       script(src="/dist/App.bundle.js")
+      script(src="/dist/Submit.bundle.js")
+

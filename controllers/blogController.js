@@ -22,7 +22,7 @@ exports.homePage = (req, res) => {
     res.render('index');
 };
 
-exports.addStore = (req, res) => {
+exports.addBlog = (req, res) => {
     res.render('editBlog', { title: 'ADD BLOG' });
 };
 
@@ -42,8 +42,8 @@ exports.resize = async (req, res, next) => {
     next();
 };
 
-exports.createStore = async (req, res) => {
-    //res.send(`${req.body.save} and ${req.body.delete}`)
+exports.createBlog = async (req, res) => {
+    req.body.author = req.user._id;
     const blog = new Blog(req.body);
     await blog.save();
     res.redirect('/');
@@ -56,16 +56,23 @@ exports.getBlogs = async (req, res) => {
     res.render('blogs', { title: 'Blogs', blogs });
 };
 
+const confirmOwner = (store, user) => {
+    if (!store.author.equals(user._id)) {
+        throw Error('You must own a blog to edit it!');
+    }
+};
+
 exports.editBlog = async (req, res) => {
     // find blog by id
     const id = req.params.id;
     const blog = await Blog.findOne({ _id: id });
-    // TODO check if they are owner of blog
+    // check if they are owner of blog
+    confirmOwner(blog, req.user);
     // render edit form
     res.render('editBlog', { title: 'Edit blog', blog });
 };
 
-exports.updateStore = async (req, res) => {
+exports.updateBlog = async (req, res) => {
     if (req.body.delete === undefined) {
         const id = req.params.id;
         const blog = await Blog.findOneAndUpdate({ _id: id }, req.body, {
@@ -80,7 +87,7 @@ exports.updateStore = async (req, res) => {
 };
 
 exports.getBlogBySlug = async (req, res, next) => {
-    const blog = await Blog.findOne({ slug: req.params.slug });
+    const blog = await Blog.findOne({ slug: req.params.slug }); // .populate('author'); => povlaci podatke o autoru
     if (!blog) return next();
     res.render('blog', { title: 'Blog', blog });
 };

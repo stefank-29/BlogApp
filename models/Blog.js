@@ -19,11 +19,11 @@ const blogSchema = new mongoose.Schema({
         default: Date.now,
     },
     photo: String,
-    // author: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'User',
-    //     required: 'You must supply an author',
-    // },
+    author: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: 'You must supply an author',
+    },
 });
 
 blogSchema.pre('save', async function (next) {

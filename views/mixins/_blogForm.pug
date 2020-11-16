@@ -1,5 +1,5 @@
 mixin blogForm(blog = {})
-    form(action=`/add/${blog._id || ''}` method="POST" enctype='multipart/form-data' class= 'card')
+    form(action=`/add/${blog._id || ''}` method="POST" enctype='multipart/form-data' class= 'card' )
         label(for="title") Title
         input(type="text" name='title' value=blog.title required)
         //- image upload
@@ -9,7 +9,7 @@ mixin blogForm(blog = {})
             img(src=`/uploads/${blog.photo}`, alt="blog photo" width='200px')
         label(for="text") Text
         textarea(name="text", cols="30", rows="10" required)= blog.text
-        input(type="submit" value='SAVE' class='button save' name='save' )
+        input(type="submit" value='SAVE' class='button save' name='save' id='save' )
         if blog._id
             input(type="submit" value='DELETE' class='button' name='delete' )
 
