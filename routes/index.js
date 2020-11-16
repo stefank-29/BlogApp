@@ -14,5 +14,15 @@ router.post(
     catchErrors(blogController.resize),
     catchErrors(blogController.createStore)
 );
+router.post(
+    '/add/:id',
+    blogController.upload,
+    catchErrors(blogController.resize),
+    catchErrors(blogController.updateStore)
+);
+
+router.get('/blogs/:id/edit/', catchErrors(blogController.editBlog));
+
+router.get('/blog/:slug', catchErrors(blogController.getBlogBySlug));
 
 module.exports = router;

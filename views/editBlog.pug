@@ -4,5 +4,5 @@ include mixins/_blogForm
 
 block content
     .inner
-        h2= title
-        +blogForm({}) 
+        h2= title.toUpperCase()
+        +blogForm(blog) 

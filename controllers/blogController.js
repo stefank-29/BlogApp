@@ -23,7 +23,7 @@ exports.homePage = (req, res) => {
 };
 
 exports.addStore = (req, res) => {
-    res.render('editStore', { title: 'ADD BLOG' });
+    res.render('editBlog', { title: 'ADD BLOG' });
 };
 
 exports.upload = multer(multerOptions).single('photo'); // puts image to body.file (in memory)
@@ -43,6 +43,7 @@ exports.resize = async (req, res, next) => {
 };
 
 exports.createStore = async (req, res) => {
+    //res.send(`${req.body.save} and ${req.body.delete}`)
     const blog = new Blog(req.body);
     await blog.save();
     res.redirect('/');
@@ -53,4 +54,28 @@ exports.getBlogs = async (req, res) => {
     const blogs = await Blog.find();
 
     res.render('blogs', { title: 'Blogs', blogs });
+};
+
+exports.editBlog = async (req, res) => {
+    // find blog by id
+    const id = req.params.id;
+    const blog = await Blog.findOne({ _id: id });
+    // TODO check if they are owner of blog
+    // render edit form
+    res.render('editBlog', { title: 'Edit blog', blog });
+};
+
+exports.updateStore = async (req, res) => {
+    const id = req.params.id;
+    const blog = await Blog.findOneAndUpdate({ _id: id }, req.body, {
+        new: true, // returns new store
+        runValidators: true, // validators
+    }).exec();
+    res.redirect('/blogs');
+};
+
+exports.getBlogBySlug = async (req, res, next) => {
+    const blog = await Blog.findOne({ slug: req.params.slug });
+    if (!blog) return next();
+    res.render('blog', { title: 'Blog', blog });
 };

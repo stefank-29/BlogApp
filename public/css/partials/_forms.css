@@ -6,6 +6,7 @@ textarea {
     font-size: 1.5rem;
     outline: none;
     resize: none;
+    white-space: pre-wrap;
 }
 input:focus,
 textarea:focus {
@@ -47,7 +48,13 @@ input.button {
     background-color: brown;
     cursor: pointer;
 }
-
+input.button.save {
+    color: whitesmoke;
+    background: rgb(31, 177, 31);
+}
+input.button.save:hover {
+    background: rgb(46, 219, 46);
+}
 input.button:hover {
     background-color: rgb(199, 67, 67);
 }
