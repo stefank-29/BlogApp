@@ -37,10 +37,11 @@ label {
 }
 .form h2 {
     margin: 0;
-    font-size: 2rem;
+    width: 90%;
+    font-size: 3rem;
     padding-bottom: 2rem;
     margin-bottom: 2rem;
-    border-bottom: 1px solid rgb(23, 23, 197);
+    border-bottom: 1px solid rgb(52, 52, 233);
 }
 
 input.button {

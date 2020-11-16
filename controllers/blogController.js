@@ -66,11 +66,16 @@ exports.editBlog = async (req, res) => {
 };
 
 exports.updateStore = async (req, res) => {
-    const id = req.params.id;
-    const blog = await Blog.findOneAndUpdate({ _id: id }, req.body, {
-        new: true, // returns new store
-        runValidators: true, // validators
-    }).exec();
+    if (req.body.delete === undefined) {
+        const id = req.params.id;
+        const blog = await Blog.findOneAndUpdate({ _id: id }, req.body, {
+            new: true, // returns new store
+            runValidators: true, // validators
+        }).exec();
+    } else {
+        const id = req.params.id;
+        const blog = await Blog.findOneAndDelete({ _id: id });
+    }
     res.redirect('/blogs');
 };
 

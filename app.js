@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -10,6 +12,7 @@ const routes = require('./routes/index');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
 const router = require('./routes/index');
+require('./handlers/passport');
 
 // create Express app
 const app = express();
@@ -35,12 +38,27 @@ app.use(expressValidator());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(
+    session({
+        secret: process.env.SECRET,
+        key: process.env.KEY,
+        resave: false,
+        saveUninitialized: false,
+        store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    })
+);
+
 //? varijable se prosledjuju templejtu u svim request-ovima
 // pass variables to our templates + all requests
 app.use((req, res, next) => {
     res.locals.h = helpers;
     res.locals.user = req.user || null; //! salje usera ako je ulogovan inace salje null
     res.locals.currentPath = req.path;
+    next();
+});
+
+app.use((req, res, next) => {
+    req.login = promisify(req.login, req);
     next();
 });
 
