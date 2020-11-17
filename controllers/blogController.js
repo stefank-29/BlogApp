@@ -91,3 +91,9 @@ exports.getBlogBySlug = async (req, res, next) => {
     if (!blog) return next();
     res.render('blog', { title: 'Blog', blog });
 };
+
+exports.getUserBlogs = async (req, res) => {
+    const userId = req.user._id;
+    const blogs = await Blog.find({ author: userId });
+    res.render('blogs', { title: 'My blogs', blogs });
+};
